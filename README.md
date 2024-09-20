@@ -54,7 +54,7 @@ Here's a basic example of how to use the validation system in a React component:
 
 ```jsx
 import React, { useState } from "react";
-import createValidationSchema, { validateField, validateForm } from './utils/validation';
+import createValidationSchema, { validateField, validateForm } from 'flexible-form-validation';
 
 function FormComponent() {
     const [data, setData] = useState({
