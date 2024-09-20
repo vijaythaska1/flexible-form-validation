@@ -1,12 +1,17 @@
 {
   "name": "flexible-form-validation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A flexible and reusable form validation package",
   "main": "validation.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["validation", "form", "joi", "flexible"],
+  "keywords": [
+    "validation",
+    "form",
+    "joi",
+    "flexible"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
