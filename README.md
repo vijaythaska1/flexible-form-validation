@@ -1,13 +1,66 @@
-import React, { useState, useCallback } from "react";
-import createValidationSchema, { validateField, validateForm } from 'flexible-form-validation';
+# Flexible Form Validation
+
+## Overview
+
+Flexible Form Validation is a React-based project that provides a customizable and easy-to-use form validation system. Built with Vite and using Joi for schema validation, this project offers a robust solution for handling form validations in React applications.
+
+## Features
+
+- Flexible field definitions with support for various types (string, email, number, date, etc.)
+- Custom validation rules for each field (required, min, max, etc.)
+- Custom error messages for each validation rule
+- Real-time field validation as the user types
+- Full form validation on submission
+- Easy integration with React components
+
+## Prerequisites
+
+- Node.js (version 14 or higher)
+- npm or yarn
+
+## Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/flexible-form-validation.git
+   cd flexible-form-validation
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+   or if you're using yarn:
+   ```
+   yarn
+   ```
+
+## Usage
+
+1. Start the development server:
+   ```
+   npm run dev
+   ```
+   or with yarn:
+   ```
+   yarn dev
+   ```
+
+2. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal).
+
+## Creating a Form with Validation
+
+Here's a basic example of how to use the validation system in a React component:
+
+```jsx
+import React, { useState } from "react";
+import createValidationSchema, { validateField, validateForm } from './utils/validation';
 
 function FormComponent() {
     const [data, setData] = useState({
         name: "",
         email: "",
         age: "",
-        birthdate: "",
-        password: ""
     });
     const [errors, setErrors] = useState({});
 
@@ -18,10 +71,6 @@ function FormComponent() {
             required: true, 
             min: 2, 
             max: 50,
-            messages: {
-                'string.min': 'Name should be at least 2 characters long',
-                'string.max': 'Name should not exceed 50 characters'
-            }
         },
         { 
             name: 'email', 
@@ -33,34 +82,14 @@ function FormComponent() {
             type: 'number', 
             min: 18, 
             max: 100,
-            messages: {
-                'number.min': 'You must be at least 18 years old',
-                'number.max': 'Age cannot exceed 100'
-            }
         },
-        { 
-            name: 'birthdate', 
-            type: 'date', 
-            required: true 
-        },
-        { 
-            name: 'password', 
-            type: 'string', 
-            required: true, 
-            min: 8,
-            messages: {
-                'string.min': 'Password should be at least 8 characters long'
-            }
-        }
     ]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setData(prev => ({ ...prev, [name]: value }));
-        setTimeout(() => {
-            const fieldErrors = validateField(validationSchema, name, value);
-            setErrors(prev => ({ ...prev, ...fieldErrors }));
-        }, 1000);
+        const fieldErrors = validateField(validationSchema, name, value);
+        setErrors(prev => ({ ...prev, ...fieldErrors }));
     };
 
     const handleSubmit = (e) => {
@@ -75,8 +104,62 @@ function FormComponent() {
 
     return (
         <form onSubmit={handleSubmit}>
-            {/* Render your form fields here */}
-            {/* Use the 'data' state for values and 'errors' state for displaying error messages */}
+            <input
+                name="name"
+                value={data.name}
+                onChange={handleChange}
+                placeholder="Name"
+            />
+            {errors.name && <p>{errors.name}</p>}
+            
+            <input
+                name="email"
+                value={data.email}
+                onChange={handleChange}
+                placeholder="Email"
+            />
+            {errors.email && <p>{errors.email}</p>}
+            
+            <input
+                name="age"
+                value={data.age}
+                onChange={handleChange}
+                placeholder="Age"
+                type="number"
+            />
+            {errors.age && <p>{errors.age}</p>}
+            
+            <button type="submit">Submit</button>
         </form>
     );
 }
+
+export default FormComponent;
+```
+
+## Customizing Validation Rules
+
+You can customize validation rules for each field by modifying the schema in the `createValidationSchema` function. For example:
+
+```javascript
+const validationSchema = createValidationSchema([
+    { 
+        name: 'password', 
+        type: 'string', 
+        required: true, 
+        min: 8,
+        messages: {
+            'string.min': 'Password must be at least 8 characters long'
+        }
+    },
+    // ... other fields
+]);
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
