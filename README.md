@@ -42,6 +42,7 @@ const validationSchema = createValidationSchema([
     min: 3, 
     max: 20,
     messages: {
+      'string.empty': 'Username is not allowed to be empty',
       'string.min': 'Username must be at least 3 characters long',
       'string.max': 'Username cannot exceed 20 characters'
     }
@@ -72,11 +73,12 @@ const validationSchema = createValidationSchema([
 ### Validating a Single Field
 
 ```javascript
-const handleChange = (event) => {
+const handleChange = useCallback((event) => {
   const { name, value } = event.target;
-  const fieldErrors = validateField(validationSchema, name, value);
-  setErrors(prev => ({ ...prev, ...fieldErrors }));
-};
+  setData(prev => ({ ...prev, [name]: value }));
+  const fieldError = validateField(validationSchema, name, value);
+  setTimeout(() => {setErrors(prev => ({ ...prev, [name]: fieldError[name] }));}, 2000);
+}, [validationSchema]);
 ```
 
 ### Validating the Entire Form
@@ -84,11 +86,11 @@ const handleChange = (event) => {
 ```javascript
 const handleSubmit = (e) => {
   e.preventDefault();
-  const { isValid, errors } = validateForm(validationSchema, formData);
-  if (!isValid) {
-    setErrors(errors);
-    return;
-  }
+ const { isValid, errors } = validateForm(validationSchema, data);
+    if (!isValid) {
+         setErrors(errors);
+         return;
+       }
   // Proceed with form submission...
 };
 ```
@@ -146,12 +148,12 @@ function FormComponent() {
   const [formData, setFormData] = useState({ username: '', email: '', age: '' });
   const [errors, setErrors] = useState({});
 
-  const handleChange = (event) => {
+  const handleChange = useCallback((event) => {
     const { name, value } = event.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    const fieldErrors = validateField(validationSchema, name, value);
-    setErrors(prev => ({ ...prev, ...fieldErrors }));
-  };
+    setData(prev => ({ ...prev, [name]: value }));
+    const fieldError = validateField(validationSchema, name, value);
+     setTimeout(() => {setErrors(prev => ({ ...prev, [name]: fieldError[name] }));}, 2000);
+  }, [validationSchema]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
