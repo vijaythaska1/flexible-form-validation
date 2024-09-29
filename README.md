@@ -19,7 +19,7 @@ npm install flexible-form-validation
 
 or if you're using yarn:
 
-```bash
+```bash 
 yarn add flexible-form-validation
 ```
 
@@ -135,7 +135,7 @@ Returns an object with `isValid` (boolean) and `errors` (object with field names
 Here's a complete example of how to use the library in a React component:
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState ,useCallback} from 'react';
 import createValidationSchema, { validateField, validateForm } from 'flexible-form-validation';
 
 const validationSchema = createValidationSchema([
@@ -150,7 +150,7 @@ function FormComponent() {
 
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
-    setData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
     const fieldError = validateField(validationSchema, name, value);
      setTimeout(() => {setErrors(prev => ({ ...prev, [name]: fieldError[name] }));}, 2000);
   }, [validationSchema]);
