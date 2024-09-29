@@ -138,15 +138,16 @@ Here's a complete example of how to use the library in a React component:
 import React, { useState ,useCallback} from 'react';
 import createValidationSchema, { validateField, validateForm } from 'flexible-form-validation';
 
-const validationSchema = createValidationSchema([
-  { name: 'username', type: 'string', required: true, min: 3, max: 20 },
-  { name: 'email', type: 'email', required: true },
-  { name: 'age', type: 'number', min: 18, max: 100 }
-]);
 
 function FormComponent() {
   const [formData, setFormData] = useState({ username: '', email: '', age: '' });
   const [errors, setErrors] = useState({});
+
+  const validationSchema = createValidationSchema([
+  { name: 'username', type: 'string', required: true, min: 3, max: 20 },
+  { name: 'email', type: 'email', required: true },
+  { name: 'age', type: 'number', min: 18, max: 100 }
+]);
 
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
