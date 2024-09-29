@@ -15,6 +15,22 @@ const defaultMessages = {
 const createFieldSchema = (field) => {
     let schema;
     switch (field.type) {
+        case 'string':
+            schema = Joi.string();
+            if (field.min) schema = schema.min(field.min);
+            if (field.max) schema = schema.max(field.max);
+            break;
+        case 'email':
+            schema = Joi.string().email({ tlds: { allow: false } });
+            break;
+        case 'number':
+            schema = Joi.number();
+            if (field.min !== undefined) schema = schema.min(field.min);
+            if (field.max !== undefined) schema = schema.max(field.max);
+            break;
+        case 'date':
+            schema = Joi.date();
+            break;
         default:
             schema = Joi.any();
     }
