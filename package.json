@@ -1,6 +1,6 @@
 {
   "name": "flexible-form-validation",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A flexible and reusable form validation package",
   "main": "index.js",
   "type": "module",
