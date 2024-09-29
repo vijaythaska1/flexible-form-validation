@@ -75,7 +75,7 @@ const validationSchema = createValidationSchema([
 ```javascript
 const handleChange = useCallback((event) => {
   const { name, value } = event.target;
-  setData(prev => ({ ...prev, [name]: value }));
+  setFormData(prev => ({ ...prev, [name]: value }));
   const fieldError = validateField(validationSchema, name, value);
   setTimeout(() => {setErrors(prev => ({ ...prev, [name]: fieldError[name] }));}, 2000);
 }, [validationSchema]);
